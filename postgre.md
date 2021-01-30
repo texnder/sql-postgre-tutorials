@@ -177,3 +177,38 @@ Block or Page -> The heap file is divided into many different 'blocks' or 'pages
 	TO DELETE:
 
 	DROP VIEW tags;
+
+### SLOW QUERY
+	mutiple join in single query:
+
+	SELECT * FROM likes 
+	LEFT JOIN posts ON posts.id = likes.post_id
+	LEFT JOIN comments ON comments.id = likes.comment_id;
+
+	=> date_trunc()
+	SELECT date_trunc ('week', COALESCE(posts.created_at, comments.created_at)) AS week,
+	COUNT(posts.id) AS num_posts,
+	COUNT(comments.id) AS num_comments
+	FROM likes
+	LEFT JOIN posts ON posts.id = likes.post_id
+	LEFT JOIN comments ON comments.id = likes.comment_id
+	GROUP BY week
+	ORDER BY week;
+
+### METERIALIZED VIEW
+	it run one time and save the result output in saparate so that we can use it again and again with executing the whole query.
+
+	CREATE MATERIALIZED VIEW weekly_likes AS (
+		SELECT date_trunc ('week', COALESCE(posts.created_at, comments.created_at)) AS week,
+		COUNT(posts.id) AS num_posts,
+		COUNT(comments.id) AS num_comments
+		FROM likes
+		LEFT JOIN posts ON posts.id = likes.post_id
+		LEFT JOIN comments ON comments.id = likes.comment_id
+		GROUP BY week
+		ORDER BY week
+	) WITH DATA;
+
+	TO REFRESH METERIALIZED VIEW:
+
+	REFRESH METERIALIZED VIEW weekly_likes;
