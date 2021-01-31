@@ -9,6 +9,11 @@
 	<> => are the values not equal?
 	!= are the values not equal
 
+### RENAME COLUMN
+
+	ALTER TABLE tableName 
+	RENAME COLUMN prevColumnName TO newColumnName;
+
 ### relationship:
 	=> one-to-many relationship
 	=> many-to-one relationship

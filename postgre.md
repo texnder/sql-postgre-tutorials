@@ -8,6 +8,9 @@
 	numbers with decimal points:
 		- decimal, numeric, real, double precision, float
 
+	point:
+		point data type is for location. it stores x,y cordinates of the plain.
+
 	BOOLEAN:
 		- true, yes, on, 1, t, y
 		- false, no, off, 0, f, n
@@ -83,7 +86,7 @@ Block or Page -> The heap file is divided into many different 'blocks' or 'pages
 	FROM users WHERE username = "something"
 
 ### INDEX
-	index are good for searching it may boost performance but it has downside to it can slows down insert/update/delete performance and it also takes extra space in harddrive. 
+	index are good for searching it may boost performance but it has downside too. it can slows down insert/update/delete performance and it also takes extra space in harddrive. 
 
 	B-tree -> general purpose index. 99% of the time you want this
 
@@ -212,3 +215,35 @@ Block or Page -> The heap file is divided into many different 'blocks' or 'pages
 	TO REFRESH METERIALIZED VIEW:
 
 	REFRESH METERIALIZED VIEW weekly_likes;
+
+### TRANSACTION 
+	transction begin with the keyword BEGIN, it creates a diffrent workspace for the begin connection. and commit changes to main database only when COMMIT keyword executed, if before that any error occurs postgre will rollback or cleanup the begin transaction. otherwise ROLLBACK should be done manually.
+
+	BEGIN;
+
+	UPDATE accounts SET balance = 100;
+
+	COMMIT;
+
+	if error occurs:
+
+	BEGIN;
+
+	SELECT * FROM shkljahskl;
+
+	ROLLBACK;
+
+
+### MIGRATION 
+
+	do not use schema migration and data migration together or same time.
+	and also use transactions to migrate.
+
+	if wanted to change x, y column to loc and copy data to it, steps to update table..
+
+	first : add new nullable column to table with name loc.
+	second : update api to put values in both x,y and loc column simentaneously.
+	third : copy all x,y data to loc column.
+	forth : update api to put values in only loc column. and make x,y nullable.
+	fifth : drop the x,y column.
+	
