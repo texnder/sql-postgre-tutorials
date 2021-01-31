@@ -184,3 +184,4 @@
 		    ELSE 'cheap'
 		  END
 		FROM products;
+
