@@ -247,3 +247,25 @@ Block or Page -> The heap file is divided into many different 'blocks' or 'pages
 	forth : update api to put values in only loc column. and make x,y nullable.
 	fifth : drop the x,y column.
 	
+	To create migration file :
+		npm run migrate create table comments
+
+		or 
+
+		npm run migrate create rename contents to body
+
+	To up and down the migrate:
+		$env:DATABASE_URL= "postgres://postgres:918918918@localhost:5432/socialnetwork"; npm run migrate up
+
+		or 
+
+		$env:DATABASE_URL= "postgres://postgres:918918918@localhost:5432/socialnetwork"; npm run migrate down
+
+## transaction Lock:
+	dont fetch all rows once otherwise it could crash the system if rows are many.
+
+	use limit to batch first n rows and after updating them commit..
+
+	and use validation it would make sure you do not crash during updates of last last batch..
+
+	transaction lock when all selected rows being updated no other transactions can run during this time other transaction has to wait untill all rows updates...	
