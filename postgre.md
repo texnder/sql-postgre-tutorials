@@ -269,3 +269,30 @@ Block or Page -> The heap file is divided into many different 'blocks' or 'pages
 	and use validation it would make sure you do not crash during updates of last last batch..
 
 	transaction lock when all selected rows being updated no other transactions can run during this time other transaction has to wait untill all rows updates...	
+
+## Testing:
+	Allways test with different test-database so that we dont need to dump development database..
+
+	Jest test runner run files simeltineously. file execute in parallel.. here if test files are many try to make different schema for each if necessary..
+
+	CREATE SCHEMA IN DATABASE:
+		CREATE SCHEMA test1;
+		 
+		or 
+
+		CREATE SCEMA test2;
+	
+	TO CREATE TABLE IN DIFFERENT SCHEMA:
+
+		CREATE TABLE schemaName.users(
+			id serial primary key,
+			username varchar(30)
+		)
+
+	TO CHANGE DEFAULT SEARCH_PATH:
+
+		SHOW search_path;
+
+		SET search_path TO 'schemaName';
+
+		note: "$user" means username of postgres itself..

@@ -185,3 +185,8 @@
 		  END
 		FROM products;
 
+	To return after insert  (RETURNING):
+		INSERT INTO users (username, bio) VALUES ($1, $2) RETURNING *;
+
+	
+
